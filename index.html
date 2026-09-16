@@ -16,6 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Pequenos da Fé">
 <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/googlefonts/noto-emoji/main/png/512/emoji_u1f981.png">
+<link rel="icon" id="appFavicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%81%3C/text%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 
 <!-- Link para fonte Baloo 2 para visual arredondado e infantil -->
@@ -1500,6 +1501,13 @@ var NAVTAB={home:"home",jogar:"jogar",conquistas:"conquistas",perfil:"perfil",
   musica:"jogar",musicaplay:"jogar",ligue:"jogar",cacapalavras:"jogar",
   diferencas:"jogar",labirinto:"jogar",quebracabeca:"jogar",cruzadinha:"jogar"};
 var current="home";
+var FAVICON_LION = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A6%81%3C/text%3E%3C/svg%3E";
+var FAVICON_TEA = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%AC%3C/text%3E%3C/svg%3E";
+function updateFavicon(name){
+  var link = document.getElementById("appFavicon");
+  if(!link) return;
+  link.href = (name==="tea") ? FAVICON_TEA : FAVICON_LION;
+}
 function go(name){
   if(!NAVMAP[name]) name="home";
   var views=document.querySelectorAll(".view");
@@ -1508,6 +1516,7 @@ function go(name){
   var btns=document.querySelectorAll("nav.bottom button");
   for(var j=0;j<btns.length;j++) btns[j].classList.toggle("active", btns[j].getAttribute("data-nav")===NAVTAB[name]);
   current=name; window.scrollTo({top:0,behavior:"smooth"}); sTap();
+  updateFavicon(name);
   if(name==="conquistas"){ renderMedals(); refreshStats(); }
   if(name==="familias") renderFamily();
   if(name==="perfil") renderProfile();
